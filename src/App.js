@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Header from './Header';
+import TodoList from './TodoList';
+import Form from './Form';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+
+class App extends Component {
+  state = {
+    todos: ["fsdaf", "fsfsd"]
+  }
+
+  onFormSubmit = (text) => {
+    let arr = [...this.state.todos];
+    arr.push(text);
+    this.setState({
+      todos: arr
+    });
+  }
+
+  handleDelete = (id) => {
+    let arr = [...this.state.todos];
+    arr.splice(id, 1);
+    this.setState({
+      todos: arr
+    });
+  }
+
+  render() {
+    return (
+      <div className='wrapper'>
+      <div className='card frame'>
+        <Header number={this.state.todos.length}/>
+        <TodoList todos={this.state.todos} handleDelete = {this.handleDelete}/>
+        <Form onFormSubmit={this.onFormSubmit} />
+      </div>
     </div>
-  );
+    );
+  }
 }
 
 export default App;
